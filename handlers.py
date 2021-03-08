@@ -11,7 +11,7 @@ def start(update, context):
     context.bot.send_message(
         chat_id=TELEGRAM_SUPPORT_CHAT_ID,
         text=f"""
-📞 Connected {user_info}.
+📞 Начало диалога с {user_info.first_name} {user_info.last_name} (@{username}).\n.
         """,
     )
 
@@ -45,6 +45,8 @@ def forward_to_user(update, context):
         'from': {'id': 49820636, 'first_name': 'Daniil', 'is_bot': False, 'last_name': 'Okhlopkov', 'username': 'danokhlopkov', 'language_code': 'en'}
     }"""
     user_id = update.message.reply_to_message.forward_from.id
+    if update.message.reply_to_message.forward_from == None:
+        user_id = update.message.from_user.to_dict()["id"]
     context.bot.copy_message(
         message_id=update.message.message_id,
         chat_id=user_id,
